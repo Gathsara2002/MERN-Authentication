@@ -8,8 +8,8 @@ const singupUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = userModel.signupMethod(email, password);
-    res.status(200).json({ user });
+    const user = await userModel.signupMethod(email, password);
+    res.status(200).json({ user:user });
   } catch (error) {
     res.status(400).json({ error: error });
   }

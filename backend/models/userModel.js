@@ -10,7 +10,7 @@ const userSchema = new Schema({
     unique: true,
   },
   password: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
@@ -18,14 +18,14 @@ const userSchema = new Schema({
 //static signup method
 userSchema.statics.signupMethod = async function (email, password) {
   //check email already stored in db
-  const exists = this.findOne({ email });
+  const exists = await this.findOne({ email });
 
   if (exists) {
     throw Error("User already exists!");
   }
 
   //generate salt
-  const salt = await bcrypt.salt(10);
+  const salt = await bcrypt.genSalt(10);
   //hash password
   const hashPassword = await bcrypt.hash(password, salt);
   //save user in db
