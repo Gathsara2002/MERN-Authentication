@@ -22,7 +22,15 @@ userSchema.statics.signupMethod = async function (email, password) {
   if (!email || !password) {
     throw Error("Email or Password is null!");
   }
-  
+
+  if (!validator.isEmail(email)) {
+    throw Error("Email is not valid!");
+  }
+
+  if (!validator.isStrongPassword(password)) {
+    throw Error("Password is not strong!");
+  }
+
   //check email already stored in db
   const exists = await this.findOne({ email });
 
